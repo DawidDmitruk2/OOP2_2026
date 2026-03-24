@@ -24,11 +24,12 @@ public class Main {
         for(Person p: personList){
             System.out.println(p);
         }
-
-        personList.get(0).adopt(personList.get(1));
         personList.get(0).adopt(personList.get(2));
+        personList.get(0).adopt(personList.get(1));
 
         Person youngest = personList.get(0).getYoungestChild();
         System.out.println("Najmłodze dziecko to: " + youngest);
+
+        System.out.println("dzieci Adama: " + personList.get(0).getChildren());
     }
 }
