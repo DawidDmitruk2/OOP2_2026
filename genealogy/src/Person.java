@@ -20,6 +20,14 @@ public class Person implements Comparable<Person> {
         return children.stream().sorted().toList();
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
     public Person(String name, String surname, LocalDate date){
         this.name = name;
         this.surname = surname;
