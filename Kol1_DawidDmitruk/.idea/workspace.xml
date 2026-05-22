@@ -2,7 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d6f30d91-2718-4f5f-a465-6d6c11240b36" name="Changes" comment="Kol1 test">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../powtorzenie/src/test1.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../powtorzenie/src/test2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../site/src/pl/umcs/oop/auth/Account.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../site/src/pl/umcs/oop/database/DatabaseConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../zadania_powt_rgb/src/ColorRGB.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../zadania_powt_rgb/src/Vec3D.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/Candidate.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/Candidate.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/Election.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/Election.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/ElectionTurn.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/ElectionTurn.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/NoWinnerException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/NoWinnerException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/SelectableMap.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/SelectableMap.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/VoivodeshipMap.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/VoivodeshipMap.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/Vote.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/Vote.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/VoteMap.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/VoteMap.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SCIAGAWKA.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SCIAGAWKA.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../powtorzenie/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../powtorzenie/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +48,7 @@
   </component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/DawidDmitruk2/OOP2_2026&quot;,
+    &quot;url&quot;: &quot;https://github.com/DawidDmitruk2/OOP2_2026.git&quot;,
     &quot;accountId&quot;: &quot;a25e3bf2-9ee3-4334-9453-21cb43f00a1a&quot;
   }
 }</component>
@@ -52,8 +70,11 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/dobrychlopakbozy/IdeaProjects/OOP2_26/Kol1_DawidDmitruk&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/dobrychlopakbozy/IdeaProjects/OOP2_26/Kol1_DawidDmitruk/out&quot;,
     &quot;onboarding.tips.debug.path&quot;: &quot;/home/dobrychlopakbozy/IdeaProjects/Kol1_DawidDmitruk/src/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;
   }
 }</component>

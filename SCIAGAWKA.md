@@ -219,11 +219,3 @@ LocalDate jutro = dzis.plusDays(1);
 long dni = ChronoUnit.DAYS.between(data1, data2);
 ```
 
----
-## CHECKLIST przed wysłaniem kolokwium:
-- [ ] Klasy publiczne = osobne pliki .java (lub innerclass)
-- [ ] Metody abstrakcyjne = nadpisane (@Override) we wszystkich podklasach
-- [ ] Checked exceptions = deklarowane (throws) lub przechwytywane (try-catch)
-- [ ] try-with-resources przy otwieraniu plików
-- [ ] super() jako pierwsza linia konstruktora podklasy
-- [ ] Akcesor (get...) do każdego prywatnego pola wymaganego przez zadanie

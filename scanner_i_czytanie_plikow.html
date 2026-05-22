@@ -1,0 +1,326 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-mono);font-size:13px;color:var(--color-text-primary)}
+.tabs{display:flex;gap:0;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:0}
+.tab{padding:8px 16px;font-size:12px;cursor:pointer;color:var(--color-text-secondary);border-bottom:2px solid transparent;font-family:var(--font-sans);background:none;border-top:none;border-left:none;border-right:none;transition:all .15s}
+.tab.active{color:var(--color-text-primary);border-bottom-color:var(--color-border-primary)}
+.tab:hover{color:var(--color-text-primary);background:var(--color-background-secondary)}
+.panel{display:none;padding:16px 0}
+.panel.active{display:block}
+pre{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:12px 14px;overflow-x:auto;margin:10px 0;line-height:1.6}
+code{font-family:var(--font-mono);font-size:12px}
+.kw{color:#c678dd}.cm{color:#7c8390;font-style:italic}.str{color:#98c379}.num{color:#d19a66}.cl{color:#e5c07b}.fn{color:#61afef}
+.label{font-size:11px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:.06em;text-transform:uppercase;margin:18px 0 4px;font-family:var(--font-sans)}
+.label:first-child{margin-top:0}
+.tip{background:var(--color-background-warning);border:0.5px solid var(--color-border-warning);border-radius:var(--border-radius-md);padding:8px 12px;font-size:12px;color:var(--color-text-warning);margin:10px 0;font-family:var(--font-sans)}
+.tip b{font-weight:500}
+.ok{background:var(--color-background-success);border:0.5px solid var(--color-border-success);border-radius:var(--border-radius-md);padding:8px 12px;font-size:12px;color:var(--color-text-success);margin:10px 0;font-family:var(--font-sans)}
+table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
+th{text-align:left;padding:6px 10px;background:var(--color-background-secondary);font-weight:500;border:0.5px solid var(--color-border-tertiary);font-family:var(--font-sans)}
+td{padding:6px 10px;border:0.5px solid var(--color-border-tertiary);font-family:var(--font-sans);color:var(--color-text-secondary);font-size:12px}
+td code{font-family:var(--font-mono);font-size:11px;color:var(--color-text-primary)}
+</style>
+
+<h2 class="sr-only">Scanner i czytanie plików w Javie</h2>
+
+<div class="tabs">
+  <button class="tab active" data-tab="scanner">Scanner — podstawy</button>
+  <button class="tab" data-tab="skip">Pomijanie linii</button>
+  <button class="tab" data-tab="plik">Scanner z pliku</button>
+  <button class="tab" data-tab="buffered">BufferedReader</button>
+  <button class="tab" data-tab="porownanie">Porównanie</button>
+</div>
+
+<div class="panel active" id="tab-scanner">
+
+<div class="label">Tworzenie i metody odczytu</div>
+<pre><code><span class="kw">import</span> java.util.Scanner;
+
+<span class="cm">// Scanner z konsoli (System.in)</span>
+<span class="cl">Scanner</span> sc = <span class="kw">new</span> <span class="cl">Scanner</span>(<span class="cl">System</span>.in);
+
+<span class="cm">// Metody odczytu jednej wartości:</span>
+<span class="kw">int</span>     n   = sc.<span class="fn">nextInt</span>();       <span class="cm">// czyta liczbę całkowitą</span>
+<span class="kw">double</span>  d   = sc.<span class="fn">nextDouble</span>();    <span class="cm">// czyta liczbę zmiennoprzecinkową</span>
+<span class="kw">long</span>    l   = sc.<span class="fn">nextLong</span>();      <span class="cm">// czyta long</span>
+<span class="kw">boolean</span> b   = sc.<span class="fn">nextBoolean</span>();   <span class="cm">// czyta "true" / "false"</span>
+<span class="cl">String</span>  tok = sc.<span class="fn">next</span>();          <span class="cm">// czyta jedno słowo (do białego znaku)</span>
+<span class="cl">String</span>  lin = sc.<span class="fn">nextLine</span>();      <span class="cm">// czyta CAŁĄ linię (z spacjami)</span>
+
+<span class="cm">// Sprawdzanie czy jest coś do odczytu:</span>
+sc.<span class="fn">hasNext</span>();           <span class="cm">// czy jest kolejny token</span>
+sc.<span class="fn">hasNextLine</span>();       <span class="cm">// czy jest kolejna linia</span>
+sc.<span class="fn">hasNextInt</span>();        <span class="cm">// czy następny token to int</span>
+
+<span class="cm">// Zawsze zamykaj Scanner po użyciu</span>
+sc.<span class="fn">close</span>();</code></pre>
+
+<div class="label">Pętla odczytu do końca wejścia</div>
+<pre><code><span class="cm">// Wzorzec: czytaj linia po linii dopóki są dane</span>
+<span class="cl">Scanner</span> sc = <span class="kw">new</span> <span class="cl">Scanner</span>(<span class="cl">System</span>.in);
+
+<span class="kw">while</span> (sc.<span class="fn">hasNextLine</span>()) {
+    <span class="cl">String</span> linia = sc.<span class="fn">nextLine</span>();
+    <span class="kw">if</span> (linia.<span class="fn">isBlank</span>()) <span class="kw">continue</span>; <span class="cm">// pomiń puste linie</span>
+    <span class="cl">String</span>[] czesci = linia.<span class="fn">split</span>(<span class="str">";"</span>);
+    <span class="cm">// przetwarzanie...</span>
+}
+sc.<span class="fn">close</span>();</code></pre>
+
+<div class="tip"><b>Uwaga:</b> Na kolokwium Scanner z pliku jest rzadszy — częściej używa się <code>Files.readAllLines()</code> lub <code>BufferedReader</code>. Scanner przydaje się gdy wczytujemy dane interaktywnie z konsoli.</div>
+</div>
+
+<div class="panel" id="tab-skip">
+
+<div class="label">Problem: nextInt/nextDouble nie konsumuje znaku nowej linii</div>
+<pre><code><span class="cm">// PUŁAPKA - klasyczny błąd na kolokwium</span>
+<span class="cl">Scanner</span> sc = <span class="kw">new</span> <span class="cl">Scanner</span>(<span class="cl">System</span>.in);
+
+<span class="kw">int</span> n = sc.<span class="fn">nextInt</span>();        <span class="cm">// czyta liczbę, ALE zostawia '\n' w buforze</span>
+<span class="cl">String</span> s = sc.<span class="fn">nextLine</span>();   <span class="cm">// PROBLEM: od razu czyta ten '\n' → s = ""</span>
+
+<span class="cm">// ROZWIĄZANIE: dodaj nextLine() po nextInt/nextDouble</span>
+<span class="kw">int</span> m = sc.<span class="fn">nextInt</span>();
+sc.<span class="fn">nextLine</span>();               <span class="cm">// "pożera" znak nowej linii z bufora</span>
+<span class="cl">String</span> t = sc.<span class="fn">nextLine</span>();   <span class="cm">// teraz poprawnie czyta następną linię</span></code></pre>
+
+<div class="label">Pomijanie N linii nagłówka — Scanner</div>
+<pre><code><span class="cm">// Pominięcie pierwszej linii (nazwa produktu w kolokwium 2023)</span>
+<span class="cl">Scanner</span> sc = <span class="kw">new</span> <span class="cl">Scanner</span>(plik);
+
+sc.<span class="fn">nextLine</span>(); <span class="cm">// linia 0: nazwa produktu — pomijamy</span>
+sc.<span class="fn">nextLine</span>(); <span class="cm">// linia 1: nagłówek tabeli — pomijamy</span>
+
+<span class="cm">// od teraz sc czyta dane (linia 2, 3, ...)</span>
+<span class="kw">while</span> (sc.<span class="fn">hasNextLine</span>()) {
+    <span class="cl">String</span> linia = sc.<span class="fn">nextLine</span>();
+    <span class="cl">String</span>[] col = linia.<span class="fn">split</span>(<span class="str">";"</span>);
+    <span class="cm">// przetwarzanie danych...</span>
+}
+sc.<span class="fn">close</span>();
+
+<span class="cm">// Pominięcie N linii w pętli</span>
+<span class="kw">int</span> naglowkow = <span class="num">3</span>;
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; naglowkow; i++) {
+    sc.<span class="fn">nextLine</span>(); <span class="cm">// każde wywołanie pomija jedną linię</span>
+}</code></pre>
+
+<div class="label">Pomijanie linii — BufferedReader</div>
+<pre><code><span class="kw">try</span> (<span class="cl">BufferedReader</span> br = <span class="cl">Files</span>.<span class="fn">newBufferedReader</span>(sciezka)) {
+
+    br.<span class="fn">readLine</span>(); <span class="cm">// linia 0: nazwa — pomijamy (wartość odrzucamy)</span>
+    br.<span class="fn">readLine</span>(); <span class="cm">// linia 1: nagłówek — pomijamy</span>
+
+    <span class="cl">String</span> linia;
+    <span class="kw">while</span> ((linia = br.<span class="fn">readLine</span>()) != <span class="kw">null</span>) { <span class="cm">// null = koniec pliku</span>
+        <span class="kw">if</span> (linia.<span class="fn">isBlank</span>()) <span class="kw">continue</span>;
+        <span class="cl">String</span>[] col = linia.<span class="fn">split</span>(<span class="str">";"</span>);
+    }
+}
+
+<span class="cm">// Alternatywnie przez Files.readAllLines() — najprostsze</span>
+<span class="cl">List</span>&lt;<span class="cl">String</span>&gt; linie = <span class="cl">Files</span>.<span class="fn">readAllLines</span>(sciezka);
+<span class="kw">String</span> nazwa    = linie.<span class="fn">get</span>(<span class="num">0</span>); <span class="cm">// linia 0</span>
+<span class="cm">// linia 1 = nagłówek, linie 2+ = dane</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">2</span>; i &lt; linie.<span class="fn">size</span>(); i++) {
+    <span class="cl">String</span>[] col = linie.<span class="fn">get</span>(i).<span class="fn">split</span>(<span class="str">";"</span>);
+}</code></pre>
+
+<div class="ok">Przez <code>readAllLines()</code> + indeksowanie nie musisz w ogóle "pomijać" — po prostu zaczynasz pętlę od <code>i = 2</code> (lub innego indeksu). To najczytelniejsze rozwiązanie na kolokwium.</div>
+</div>
+
+<div class="panel" id="tab-plik">
+
+<div class="label">Scanner otwierający plik</div>
+<pre><code><span class="kw">import</span> java.io.File;
+<span class="kw">import</span> java.nio.file.Path;
+<span class="kw">import</span> java.util.Scanner;
+
+<span class="cm">// Sposób 1: przez File</span>
+<span class="kw">try</span> (<span class="cl">Scanner</span> sc = <span class="kw">new</span> <span class="cl">Scanner</span>(<span class="kw">new</span> <span class="cl">File</span>(<span class="str">"plik.csv"</span>))) {
+    <span class="kw">while</span> (sc.<span class="fn">hasNextLine</span>()) {
+        <span class="cl">String</span> linia = sc.<span class="fn">nextLine</span>();
+    }
+} <span class="cm">// try-with-resources — zamknięty automatycznie</span>
+
+<span class="cm">// Sposób 2: przez Path (Java 11+)</span>
+<span class="kw">try</span> (<span class="cl">Scanner</span> sc = <span class="kw">new</span> <span class="cl">Scanner</span>(<span class="cl">Path</span>.<span class="fn">of</span>(<span class="str">"plik.csv"</span>))) {
+    <span class="kw">while</span> (sc.<span class="fn">hasNextLine</span>()) {
+        <span class="cl">String</span> linia = sc.<span class="fn">nextLine</span>();
+    }
+}
+
+<span class="cm">// Sposób 3: przez InputStream (np. z zasobu wewnątrz jara)</span>
+<span class="kw">try</span> (<span class="cl">Scanner</span> sc = <span class="kw">new</span> <span class="cl">Scanner</span>(
+        <span class="cl">MojaKlasa</span>.<span class="kw">class</span>.<span class="fn">getResourceAsStream</span>(<span class="str">"/data.csv"</span>))) {
+    <span class="kw">while</span> (sc.<span class="fn">hasNextLine</span>()) { ... }
+}</code></pre>
+
+<div class="label">Pełny wzorzec fromCsv() przez Scanner</div>
+<pre><code><span class="kw">public static</span> <span class="cl">Produkt</span> <span class="fn">fromCsv</span>(<span class="cl">Path</span> sciezka) {
+    <span class="kw">try</span> (<span class="cl">Scanner</span> sc = <span class="kw">new</span> <span class="cl">Scanner</span>(sciezka)) {
+
+        <span class="cm">// linia 0: nazwa produktu</span>
+        <span class="cl">String</span> nazwa = sc.<span class="fn">nextLine</span>().<span class="fn">trim</span>();
+
+        <span class="cm">// linia 1: nagłówek — pomijamy</span>
+        sc.<span class="fn">nextLine</span>();
+
+        <span class="cm">// linie 2+: dane</span>
+        <span class="cl">List</span>&lt;<span class="kw">double</span>[]&gt; wiersze = <span class="kw">new</span> <span class="cl">ArrayList</span>&lt;&gt;();
+        <span class="kw">while</span> (sc.<span class="fn">hasNextLine</span>()) {
+            <span class="cl">String</span> linia = sc.<span class="fn">nextLine</span>();
+            <span class="kw">if</span> (linia.<span class="fn">isBlank</span>()) <span class="kw">continue</span>;
+
+            <span class="cl">String</span>[] col = linia.<span class="fn">split</span>(<span class="str">";"</span>);
+            <span class="kw">double</span>[] ceny = <span class="kw">new double</span>[col.<span class="fn">length</span>];
+            <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; col.<span class="fn">length</span>; i++)
+                ceny[i] = <span class="cl">Double</span>.<span class="fn">parseDouble</span>(col[i].<span class="fn">trim</span>());
+            wiersze.<span class="fn">add</span>(ceny);
+        }
+
+        <span class="kw">return new</span> <span class="fn">Produkt</span>(nazwa, wiersze);
+
+    } <span class="kw">catch</span> (<span class="cl">IOException</span> e) {
+        <span class="kw">throw new</span> <span class="cl">RuntimeException</span>(<span class="str">"Błąd pliku: "</span> + sciezka, e);
+    }
+}</code></pre>
+</div>
+
+<div class="panel" id="tab-buffered">
+
+<div class="label">BufferedReader — pełne API</div>
+<pre><code><span class="kw">import</span> java.io.BufferedReader;
+<span class="kw">import</span> java.nio.file.Files;
+<span class="kw">import</span> java.nio.file.Path;
+
+<span class="cm">// Otwarcie (zawsze try-with-resources!)</span>
+<span class="kw">try</span> (<span class="cl">BufferedReader</span> br = <span class="cl">Files</span>.<span class="fn">newBufferedReader</span>(<span class="cl">Path</span>.<span class="fn">of</span>(<span class="str">"plik.csv"</span>))) {
+
+    <span class="cm">// readLine() - czyta jedną linię, zwraca null przy końcu pliku</span>
+    <span class="cl">String</span> pierwsza = br.<span class="fn">readLine</span>();  <span class="cm">// linia 0</span>
+    br.<span class="fn">readLine</span>();                      <span class="cm">// linia 1 — pomijamy (wynik odrzucamy)</span>
+
+    <span class="cl">String</span> linia;
+    <span class="kw">while</span> ((linia = br.<span class="fn">readLine</span>()) != <span class="kw">null</span>) {
+        <span class="kw">if</span> (linia.<span class="fn">isBlank</span>()) <span class="kw">continue</span>;  <span class="cm">// pomiń puste</span>
+        <span class="kw">if</span> (linia.<span class="fn">startsWith</span>(<span class="str">"#"</span>)) <span class="kw">continue</span>; <span class="cm">// pomiń komentarze</span>
+
+        <span class="cl">String</span>[] col = linia.<span class="fn">split</span>(<span class="str">";"</span>);
+        <span class="cm">// col[0], col[1], ... → dane</span>
+    }
+
+    <span class="cm">// stream() - czytanie wszystkich linii jako Stream (Java 8+)</span>
+    <span class="cm">// br.lines() zwraca Stream&lt;String&gt;, leniwy odczyt</span>
+}
+
+<span class="cm">// BufferedReader przez stream - nowoczesny styl</span>
+<span class="kw">try</span> (<span class="cl">BufferedReader</span> br = <span class="cl">Files</span>.<span class="fn">newBufferedReader</span>(sciezka)) {
+    br.<span class="fn">lines</span>()                           <span class="cm">// Stream&lt;String&gt; linii</span>
+      .<span class="fn">skip</span>(<span class="num">2</span>)                           <span class="cm">// POMIŃ pierwsze 2 linie (nagłówki)</span>
+      .<span class="fn">filter</span>(l -&gt; !l.<span class="fn">isBlank</span>())        <span class="cm">// usuń puste</span>
+      .<span class="fn">map</span>(l -&gt; l.<span class="fn">split</span>(<span class="str">";"</span>))           <span class="cm">// podziel po średniku</span>
+      .<span class="fn">forEach</span>(col -&gt; <span class="cm">/* przetwarzanie */</span>);
+}</code></pre>
+
+<div class="label">skip() — najkrótszy sposób pominięcia nagłówków</div>
+<pre><code><span class="cm">// Files.lines() + skip() — elegancki, jednoliniowy wzorzec</span>
+<span class="cl">Files</span>.<span class="fn">lines</span>(sciezka)       <span class="cm">// Stream&lt;String&gt; wszystkich linii</span>
+     .<span class="fn">skip</span>(<span class="num">1</span>)               <span class="cm">// pomiń N pierwszych linii</span>
+     .<span class="fn">filter</span>(l -&gt; !l.<span class="fn">isBlank</span>())
+     .<span class="fn">map</span>(l -&gt; l.<span class="fn">split</span>(<span class="str">";"</span>))
+     .<span class="fn">collect</span>(<span class="cl">Collectors</span>.<span class="fn">toList</span>());
+
+<span class="cm">// readAllLines + subList — alternatywa bez streamu</span>
+<span class="cl">List</span>&lt;<span class="cl">String</span>&gt; wszystkie = <span class="cl">Files</span>.<span class="fn">readAllLines</span>(sciezka);
+<span class="cl">List</span>&lt;<span class="cl">String</span>&gt; dane = wszystkie.<span class="fn">subList</span>(<span class="num">2</span>, wszystkie.<span class="fn">size</span>()); <span class="cm">// od linii 2</span></code></pre>
+</div>
+
+<div class="panel" id="tab-porownanie">
+
+<table>
+<tr>
+  <th>Cecha</th>
+  <th>Scanner</th>
+  <th>BufferedReader</th>
+  <th>Files.readAllLines()</th>
+</tr>
+<tr>
+  <td>Import</td>
+  <td><code>java.util.Scanner</code></td>
+  <td><code>java.io.BufferedReader</code></td>
+  <td><code>java.nio.file.Files</code></td>
+</tr>
+<tr>
+  <td>Czyta typy</td>
+  <td>int, double, String...</td>
+  <td>tylko String (linia)</td>
+  <td>tylko String (linia)</td>
+</tr>
+<tr>
+  <td>Pominięcie linii</td>
+  <td><code>sc.nextLine()</code></td>
+  <td><code>br.readLine()</code></td>
+  <td><code>lista.get(n)</code> / <code>.skip(n)</code></td>
+</tr>
+<tr>
+  <td>Koniec pliku</td>
+  <td><code>hasNextLine()</code></td>
+  <td><code>readLine() != null</code></td>
+  <td>— (cały plik od razu)</td>
+</tr>
+<tr>
+  <td>Zamknięcie</td>
+  <td>try-with-resources</td>
+  <td>try-with-resources</td>
+  <td>automatyczne</td>
+</tr>
+<tr>
+  <td>Kiedy używać</td>
+  <td>wejście z konsoli, mieszane typy</td>
+  <td>duże pliki, linia po linii</td>
+  <td>małe/średnie pliki CSV</td>
+</tr>
+<tr>
+  <td>Na kolokwium</td>
+  <td>rzadziej</td>
+  <td>czasem</td>
+  <td>najczęściej</td>
+</tr>
+</table>
+
+<div class="label">Podsumowanie — jak pominąć linie</div>
+<pre><code><span class="cm">// Scanner — każde nextLine() = pominięcie jednej linii</span>
+sc.<span class="fn">nextLine</span>(); <span class="cm">// linia 0</span>
+sc.<span class="fn">nextLine</span>(); <span class="cm">// linia 1</span>
+
+<span class="cm">// BufferedReader — readLine() bez przypisania</span>
+br.<span class="fn">readLine</span>(); <span class="cm">// linia 0</span>
+br.<span class="fn">readLine</span>(); <span class="cm">// linia 1</span>
+
+<span class="cm">// Stream (Files.lines / br.lines) — skip(n)</span>
+<span class="cl">Files</span>.<span class="fn">lines</span>(p).<span class="fn">skip</span>(<span class="num">2</span>).<span class="fn">forEach</span>(...);
+
+<span class="cm">// readAllLines — zacznij pętlę od i=2</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">2</span>; i &lt; linie.<span class="fn">size</span>(); i++) { ... }
+
+<span class="cm">// readAllLines — subList</span>
+linie.<span class="fn">subList</span>(<span class="num">2</span>, linie.<span class="fn">size</span>()).<span class="fn">forEach</span>(...);
+
+<span class="cm">// PUŁAPKA SCANNERA: nextInt() zostawia '\n' w buforze!</span>
+<span class="kw">int</span> n = sc.<span class="fn">nextInt</span>();
+sc.<span class="fn">nextLine</span>(); <span class="cm">// WYMAGANE — czyści bufor przed następnym nextLine()</span>
+<span class="cl">String</span> s = sc.<span class="fn">nextLine</span>(); <span class="cm">// teraz działa poprawnie</span></code></pre>
+</div>
+
+<script>
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+  });
+});
+</script>
