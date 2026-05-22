@@ -2,25 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d6f30d91-2718-4f5f-a465-6d6c11240b36" name="Changes" comment="Kol1 test">
-      <change afterPath="$PROJECT_DIR$/../powtorzenie/src/test1.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../powtorzenie/src/test2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../site/src/pl/umcs/oop/auth/Account.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../site/src/pl/umcs/oop/database/DatabaseConnection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../zadania_powt_rgb/src/ColorRGB.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../zadania_powt_rgb/src/Vec3D.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/Candidate.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/Candidate.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/Election.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/Election.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/ElectionTurn.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/ElectionTurn.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/NoWinnerException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/NoWinnerException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/SelectableMap.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/SelectableMap.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/VoivodeshipMap.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/VoivodeshipMap.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/Vote.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/Vote.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/VoteMap.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kol1_DawidDmitruk/VoteMap.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SCIAGAWKA.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SCIAGAWKA.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../powtorzenie/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../powtorzenie/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Election.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Election.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

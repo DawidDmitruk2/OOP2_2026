@@ -35,6 +35,7 @@ public class Election {
     }
 
     // Getter: zwraca kopię listy kandydatów (zabezpiecza przed modyfikacją z zewnątrz).
+    //plytka kopia
     public List<Candidate> getCandidates() {
         return new ArrayList<>(candidates);
     }
