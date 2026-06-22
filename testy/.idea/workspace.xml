@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="207e5deb-a83f-4e69-8b6e-5540bb225851" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../Kol2_DawidDmitruk/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Kol2_DawidDmitruk/src/main/java/pl/umcs/oop/game/Duel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Kol2_DawidDmitruk/src/main/java/pl/umcs/oop/game/Gesture.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Kol2_DawidDmitruk/src/main/java/pl/umcs/oop/game/Player.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Kol2_DawidDmitruk/src/test/java/pl/umcs/oop/game/DuelTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat/src/main/java/pl/umcs/oop/client/Client.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat/src/main/java/pl/umcs/oop/client/Receiver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat/src/main/java/pl/umcs/oop/server/ClientThread.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chat/src/main/java/pl/umcs/oop/server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Kol1_DawidDmitruk/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Kol1_DawidDmitruk/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;DawidDmitruk2&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/DawidDmitruk2/OOP2_2026.git&quot;,
+    &quot;accountId&quot;: &quot;a25e3bf2-9ee3-4334-9453-21cb43f00a1a&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3EGiwd3gB25yoKyEO02vQ2axTBi" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "true",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Repository.Attach.Annotations": "true",
+    "Repository.Attach.JavaDocs": "true",
+    "Repository.Attach.Sources": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/dobrychlopakbozy/IdeaProjects/OOP2_26/testy",
+    "project.structure.last.edited": "Facets",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.archetype.catalogs"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="207e5deb-a83f-4e69-8b6e-5540bb225851" name="Changes" comment="" />
+      <created>1779811549063</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1779811549063</updated>
+    </task>
+    <servers />
+  </component>
+</project>
