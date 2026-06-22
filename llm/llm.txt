@@ -1,1 +1,6 @@
 https://huggingface.co/Qwen/Qwen2.5-Coder-3B-Instruct-GGUF/blob/main/qwen2.5-coder-3b-instruct-q4_k_m.gguf
+
+
+
+
+./llama-server -m qwen2.5-coder-3b-instruct-q4_k_m.gguf -c 8192 -ngl 0
