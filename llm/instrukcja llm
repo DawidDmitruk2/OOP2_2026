@@ -1,0 +1,12 @@
+1. Pobrac DawidDmitruk2 github
+2. Rozpakowac i wejsc do folder llm
+3. Wejsc do llm.txt - 1 tekst to link do modelu ktory trzeba pobrac; 2 tekst to komenda ktora odpala sie model
+4. Po pobraniu modelu przeniesc go do llm/cpu/llama-b9151/ lub llm/gpu/llama-b9151/
+5. Znalezc llama-server w folderze, kliknac prawym, wlasciwosci, permissions -> allow execute (dac pozwolenie na wykonanie pliku)
+6. W folderze z llama-server kliknac prawym na puste pole i odpalic terminal w tym folderze
+7. Skopiowac 2 tekst z llm.txt i wkleic do terminala
+(./llama-server -m qwen2.5-coder-3b-instruct-q4_k_m.gguf -c 8192 -ngl 0)
+liczba 8192 odpowiada liczbie VRAMU do uzycia dla llm, jezeli VRAM jest niewystarczajacy to pc uzyje RAM, jezeli pojawia sie jakies bledy mozna zmniejszyc ta liczbe
+8. kliknac crtl + lewy na adres llm   (przykald - https://127.0.0.1:8080)
+9. llm odpala sie w przegladarce
+
