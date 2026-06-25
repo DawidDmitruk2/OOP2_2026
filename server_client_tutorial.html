@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Java TCP Server & Client – Tutorial</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #1e1f22;
+    color: #bcbec4;
+    font-size: 15px;
+    line-height: 1.7;
+    padding: 40px 20px;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .doc-header {
+    border-bottom: 2px solid #3c3f41;
+    padding-bottom: 24px;
+    margin-bottom: 36px;
+  }
+  .doc-header h1 {
+    font-size: 32px;
+    color: #ffffff;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .doc-header .subtitle {
+    color: #6f737a;
+    font-size: 14px;
+    margin-top: 6px;
+  }
+  .badge {
+    display: inline-block;
+    background: #2b4b6f;
+    color: #6ab0f5;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Sections */
+  .section {
+    margin-bottom: 44px;
+  }
+  .section-title {
+    font-size: 20px;
+    color: #ffffff;
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-num {
+    background: #2d5a8e;
+    color: #6ab0f5;
+    font-size: 12px;
+    font-weight: 700;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .section p {
+    color: #9da0a8;
+    margin-bottom: 14px;
+    max-width: 720px;
+  }
+
+  /* Note box */
+  .note {
+    background: #1a2d1a;
+    border-left: 3px solid #4caf50;
+    border-radius: 0 6px 6px 0;
+    padding: 10px 16px;
+    margin-bottom: 14px;
+    color: #81c784;
+    font-size: 13px;
+  }
+  .warn {
+    background: #2d2416;
+    border-left: 3px solid #f0a500;
+    border-radius: 0 6px 6px 0;
+    padding: 10px 16px;
+    margin-bottom: 14px;
+    color: #ffcc80;
+    font-size: 13px;
+  }
+
+  /* Code block – IntelliJ Darcula style */
+  .code-block {
+    margin: 14px 0 18px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #3c3f41;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+  }
+  .code-header {
+    background: #2b2d30;
+    border-bottom: 1px solid #3c3f41;
+    padding: 6px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .code-lang {
+    font-size: 11px;
+    color: #6f737a;
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .code-dots { display: flex; gap: 5px; margin-right: auto; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; }
+  .dot-y { background: #febc2e; }
+  .dot-g { background: #28c840; }
+
+  pre {
+    background: #1e1f22;
+    padding: 20px 24px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
+    font-size: 13.5px;
+    line-height: 1.65;
+    tab-size: 4;
+  }
+
+  /* IntelliJ Darcula syntax colors */
+  .kw   { color: #cc7832; font-weight: 600; }  /* keyword – orange */
+  .kw2  { color: #cc7832; }                     /* keyword secondary */
+  .type { color: #a9b7c6; }                     /* type names */
+  .cls  { color: #ffc66d; }                     /* class names */
+  .fn   { color: #ffc66d; }                     /* method names */
+  .str  { color: #6a8759; }                     /* strings – green */
+  .num  { color: #6897bb; }                     /* numbers – blue */
+  .cmt  { color: #808080; font-style: italic; } /* comments – gray */
+  .ann  { color: #bbb529; }                     /* annotations */
+  .var  { color: #a9b7c6; }                     /* variables */
+  .op   { color: #a9b7c6; }                     /* operators */
+  .punc { color: #a9b7c6; }                     /* punctuation */
+  .hl   { background: #2d3d26; border-radius: 2px; padding: 0 2px; } /* highlight */
+  .ascii { color: #6f8cba; font-style: italic; }
+
+  /* Steps list */
+  .steps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 12px 0;
+  }
+  .steps li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: #2b2d30;
+    border: 1px solid #3c3f41;
+    border-radius: 6px;
+    padding: 10px 14px;
+  }
+  .step-n {
+    background: #2d5a8e;
+    color: #6ab0f5;
+    font-size: 11px;
+    font-weight: 700;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-title { color: #ffffff; font-weight: 600; font-size: 13.5px; }
+  .step-desc  { color: #6f737a; font-size: 12.5px; margin-top: 1px; }
+
+  /* Diagram / ASCII art */
+  .diagram {
+    background: #2b2d30;
+    border: 1px solid #3c3f41;
+    border-radius: 8px;
+    padding: 20px 28px;
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+    font-size: 13px;
+    color: #6f8cba;
+    margin: 14px 0 18px 0;
+    line-height: 1.8;
+  }
+
+  /* Inline code */
+  code {
+    background: #2b2d30;
+    border: 1px solid #3c3f41;
+    border-radius: 3px;
+    padding: 1px 6px;
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+    font-size: 12.5px;
+    color: #a9b7c6;
+  }
+
+  hr { border: none; border-top: 1px solid #3c3f41; margin: 36px 0; }
+
+  @media print {
+    body { background: #1e1f22; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="doc-header">
+    <div style="margin-bottom:10px">
+      <span class="badge">Java</span>
+      <span class="badge">TCP</span>
+      <span class="badge">OOP2</span>
+    </div>
+    <h1>Java TCP Server &amp; Client</h1>
+    <div class="subtitle">Kompletny przewodnik krok po kroku · UMCS OOP2</div>
+  </div>
+
+  <!-- 1 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">1</span> Co to jest Socket?</div>
+    <p>Socket to jeden koniec rury TCP między dwoma programami. Serwer czeka, klient się podłącza — potem obaj mają swój koniec rury i mogą pisać i czytać.</p>
+    <div class="diagram">
+ Klient                     Serwer<br>
+   Socket  &lt;─── TCP ───&gt;  Socket<br>
+  (twój koniec)           (ich koniec)
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">2</span> Serwer – minimalny</div>
+    <p><code>ServerSocket</code> to "drzwi" serwera — czeka na połączenia. <code>accept()</code> blokuje wątek do momentu gdy ktoś się połączy i zwraca gotowy <code>Socket</code>.</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <span class="code-lang">Java</span>
+      </div>
+<pre><span class="cmt">// Serwer nasłuchuje na porcie 5000</span>
+<span class="cls">ServerSocket</span> <span class="var">serverSocket</span> <span class="op">=</span> <span class="kw">new</span> <span class="cls">ServerSocket</span><span class="punc">(</span><span class="num">5000</span><span class="punc">);</span>
+
+<span class="cmt">// Blokuje program tutaj i czeka aż ktoś się połączy</span>
+<span class="cls">Socket</span> <span class="var">socket</span> <span class="op">=</span> <span class="var">serverSocket</span><span class="punc">.</span><span class="fn">accept</span><span class="punc">();</span>
+
+<span class="cls">System</span><span class="punc">.</span><span class="var">out</span><span class="punc">.</span><span class="fn">println</span><span class="punc">(</span><span class="str">"Klient połączony!"</span><span class="punc">);</span></pre>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">3</span> Czytanie i pisanie przez socket</div>
+    <p>Przez socket nie wysyłasz obiektów — wysyłasz <strong style="color:#fff">tekst linia po linii</strong>. <code>BufferedReader</code> służy do odczytu, <code>PrintWriter</code> do zapisu. Parametr <code>true</code> w PrintWriter włącza auto-flush.</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <span class="code-lang">Java</span>
+      </div>
+<pre><span class="cmt">// Odczyt (co klient wysłał)</span>
+<span class="cls">BufferedReader</span> <span class="var">reader</span> <span class="op">=</span> <span class="kw">new</span> <span class="cls">BufferedReader</span><span class="punc">(</span>
+    <span class="kw">new</span> <span class="cls">InputStreamReader</span><span class="punc">(</span><span class="var">socket</span><span class="punc">.</span><span class="fn">getInputStream</span><span class="punc">())</span>
+<span class="punc">);</span>
+
+<span class="cmt">// Zapis (co wysyłasz do klienta)</span>
+<span class="cmt">// true = auto-flush, czyli wysyła od razu po println()</span>
+<span class="cls">PrintWriter</span> <span class="var">writer</span> <span class="op">=</span> <span class="kw">new</span> <span class="cls">PrintWriter</span><span class="punc">(</span><span class="var">socket</span><span class="punc">.</span><span class="fn">getOutputStream</span><span class="punc">(),</span> <span class="kw2">true</span><span class="punc">);</span>
+
+<span class="cmt">// Odbierz wiadomość (czeka na linię od klienta)</span>
+<span class="cls">String</span> <span class="var">message</span> <span class="op">=</span> <span class="var">reader</span><span class="punc">.</span><span class="fn">readLine</span><span class="punc">();</span>
+
+<span class="cmt">// Wyślij odpowiedź</span>
+<span class="var">writer</span><span class="punc">.</span><span class="fn">println</span><span class="punc">(</span><span class="str">"Cześć klient!"</span><span class="punc">);</span></pre>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">4</span> Pętla odbioru</div>
+    <p><code>readLine()</code> zwraca <code>null</code> gdy klient się rozłączy — to jest warunek wyjścia z pętli.</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <span class="code-lang">Java</span>
+      </div>
+<pre><span class="cls">String</span> <span class="var">message</span><span class="punc">;</span>
+<span class="kw">while</span> <span class="punc">((</span><span class="var">message</span> <span class="op">=</span> <span class="var">reader</span><span class="punc">.</span><span class="fn">readLine</span><span class="punc">())</span> <span class="op">!=</span> <span class="kw2">null</span><span class="punc">) {</span>
+    <span class="cmt">// null oznacza że klient się rozłączył</span>
+    <span class="cls">System</span><span class="punc">.</span><span class="var">out</span><span class="punc">.</span><span class="fn">println</span><span class="punc">(</span><span class="str">"Odebrano: "</span> <span class="op">+</span> <span class="var">message</span><span class="punc">);</span>
+<span class="punc">}</span>
+<span class="cmt">// klient rozłączony</span>
+<span class="var">socket</span><span class="punc">.</span><span class="fn">close</span><span class="punc">();</span></pre>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">5</span> Klient – minimalny</div>
+    <p>Klient łączy się przez <code>new Socket(adres, port)</code>. Reszta — strumienie i pętla — jest identyczna jak po stronie serwera.</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <span class="code-lang">Java</span>
+      </div>
+<pre><span class="cmt">// Połącz się z serwerem na localhost port 5000</span>
+<span class="cls">Socket</span> <span class="var">socket</span> <span class="op">=</span> <span class="kw">new</span> <span class="cls">Socket</span><span class="punc">(</span><span class="str">"localhost"</span><span class="punc">,</span> <span class="num">5000</span><span class="punc">);</span>
+
+<span class="cls">BufferedReader</span> <span class="var">reader</span> <span class="op">=</span> <span class="kw">new</span> <span class="cls">BufferedReader</span><span class="punc">(</span>
+    <span class="kw">new</span> <span class="cls">InputStreamReader</span><span class="punc">(</span><span class="var">socket</span><span class="punc">.</span><span class="fn">getInputStream</span><span class="punc">())</span>
+<span class="punc">);</span>
+<span class="cls">PrintWriter</span> <span class="var">writer</span> <span class="op">=</span> <span class="kw">new</span> <span class="cls">PrintWriter</span><span class="punc">(</span><span class="var">socket</span><span class="punc">.</span><span class="fn">getOutputStream</span><span class="punc">(),</span> <span class="kw2">true</span><span class="punc">);</span>
+
+<span class="cmt">// Wyślij wiadomość</span>
+<span class="var">writer</span><span class="punc">.</span><span class="fn">println</span><span class="punc">(</span><span class="str">"Hej serwer!"</span><span class="punc">);</span>
+
+<span class="cmt">// Odbierz odpowiedź</span>
+<span class="cls">String</span> <span class="var">odpowiedz</span> <span class="op">=</span> <span class="var">reader</span><span class="punc">.</span><span class="fn">readLine</span><span class="punc">();</span>
+<span class="cls">System</span><span class="punc">.</span><span class="var">out</span><span class="punc">.</span><span class="fn">println</span><span class="punc">(</span><span class="str">"Serwer powiedział: "</span> <span class="op">+</span> <span class="var">odpowiedz</span><span class="punc">);</span>
+
+<span class="var">socket</span><span class="punc">.</span><span class="fn">close</span><span class="punc">();</span></pre>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- 6 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">6</span> Problem: serwer obsługuje tylko jednego klienta</div>
+    <p>Bez wątków serwer obsługuje klientów <strong style="color:#fff">jeden po drugim</strong> — drugi czeka aż pierwszy skończy. Rozwiązanie: osobny wątek dla każdego klienta.</p>
+
+    <div class="warn">⚠️ Bez wątków drugi klient nie może się połączyć dopóki pierwszy nie skończy.</div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <span class="code-lang">Java</span>
+      </div>
+<pre><span class="cmt">// ❌ Źle – sekwencyjne, drugi klient czeka</span>
+<span class="kw">while</span> <span class="punc">(</span><span class="kw2">true</span><span class="punc">) {</span>
+    <span class="cls">Socket</span> <span class="var">socket</span> <span class="op">=</span> <span class="var">serverSocket</span><span class="punc">.</span><span class="fn">accept</span><span class="punc">();</span>
+    <span class="fn">obsluzKlienta</span><span class="punc">(</span><span class="var">socket</span><span class="punc">);</span>  <span class="cmt">// blokuje dopóki klient nie skończy</span>
+<span class="punc">}</span>
+
+<span class="cmt">// ✅ Dobrze – każdy klient w swoim wątku</span>
+<span class="kw">while</span> <span class="punc">(</span><span class="kw2">true</span><span class="punc">) {</span>
+    <span class="cls">Socket</span> <span class="var">socket</span> <span class="op">=</span> <span class="var">serverSocket</span><span class="punc">.</span><span class="fn">accept</span><span class="punc">();</span>
+    <span class="cls">ClientThread</span> <span class="var">ct</span> <span class="op">=</span> <span class="kw">new</span> <span class="cls">ClientThread</span><span class="punc">(</span><span class="var">socket</span><span class="punc">,</span> <span class="kw2">this</span><span class="punc">);</span>
+    <span class="kw">new</span> <span class="cls">Thread</span><span class="punc">(</span><span class="var">ct</span><span class="punc">).</span><span class="fn">start</span><span class="punc">();</span>  <span class="cmt">// nie blokuje, od razu czeka na kolejnego</span>
+<span class="punc">}</span></pre>
+    </div>
+  </div>
+
+  <!-- 7 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">7</span> ClientThread – szablon</div>
+    <p><code>ClientThread</code> implementuje <code>Runnable</code> — oddziela logikę (<code>run</code>) od zarządzania wątkiem. Każdy klient dostaje własny obiekt z własnymi strumieniami.</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <span class="code-lang">Java – ClientThread.java</span>
+      </div>
+<pre><span class="kw">public class</span> <span class="cls">ClientThread</span> <span class="kw">implements</span> <span class="cls">Runnable</span> <span class="punc">{</span>
+    <span class="kw">private final</span> <span class="cls">Socket</span>        <span class="var">socket</span><span class="punc">;</span>
+    <span class="kw">private final</span> <span class="cls">BufferedReader</span> <span class="var">reader</span><span class="punc">;</span>
+    <span class="kw">private final</span> <span class="cls">PrintWriter</span>   <span class="var">writer</span><span class="punc">;</span>
+
+    <span class="kw">public</span> <span class="fn">ClientThread</span><span class="punc">(</span><span class="cls">Socket</span> <span class="var">socket</span><span class="punc">)</span> <span class="kw">throws</span> <span class="cls">IOException</span> <span class="punc">{</span>
+        <span class="kw2">this</span><span class="punc">.</span><span class="var">socket</span> <span class="op">=</span> <span class="var">socket</span><span class="punc">;</span>
+        <span class="var">reader</span> <span class="op">=</span> <span class="kw">new</span> <span class="cls">BufferedReader</span><span class="punc">(</span>
+            <span class="kw">new</span> <span class="cls">InputStreamReader</span><span class="punc">(</span><span class="var">socket</span><span class="punc">.</span><span class="fn">getInputStream</span><span class="punc">())</span>
+        <span class="punc">);</span>
+        <span class="var">writer</span> <span class="op">=</span> <span class="kw">new</span> <span class="cls">PrintWriter</span><span class="punc">(</span><span class="var">socket</span><span class="punc">.</span><span class="fn">getOutputStream</span><span class="punc">(),</span> <span class="kw2">true</span><span class="punc">);</span>
+    <span class="punc">}</span>
+
+    <span class="ann">@Override</span>
+    <span class="kw">public void</span> <span class="fn">run</span><span class="punc">() {</span>
+        <span class="cls">String</span> <span class="var">message</span><span class="punc">;</span>
+        <span class="kw">try</span> <span class="punc">{</span>
+            <span class="kw">while</span> <span class="punc">((</span><span class="var">message</span> <span class="op">=</span> <span class="var">reader</span><span class="punc">.</span><span class="fn">readLine</span><span class="punc">())</span> <span class="op">!=</span> <span class="kw2">null</span><span class="punc">) {</span>
+                <span class="cls">System</span><span class="punc">.</span><span class="var">out</span><span class="punc">.</span><span class="fn">println</span><span class="punc">(</span><span class="str">"Odebrano: "</span> <span class="op">+</span> <span class="var">message</span><span class="punc">);</span>
+                <span class="var">writer</span><span class="punc">.</span><span class="fn">println</span><span class="punc">(</span><span class="str">"Echo: "</span> <span class="op">+</span> <span class="var">message</span><span class="punc">);</span>
+            <span class="punc">}</span>
+            <span class="var">socket</span><span class="punc">.</span><span class="fn">close</span><span class="punc">();</span>
+        <span class="punc">}</span> <span class="kw">catch</span> <span class="punc">(</span><span class="cls">IOException</span> <span class="var">e</span><span class="punc">) {</span>
+            <span class="var">e</span><span class="punc">.</span><span class="fn">printStackTrace</span><span class="punc">();</span>
+        <span class="punc">}</span>
+    <span class="punc">}</span>
+<span class="punc">}</span></pre>
+    </div>
+  </div>
+
+  <!-- 8 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">8</span> Broadcast – wysyłanie do wszystkich</div>
+    <p>Serwer przechowuje listę wszystkich <code>ClientThread</code>. <code>CopyOnWriteArrayList</code> jest bezpieczna wielowątkowo — <code>broadcast()</code> może iterować gdy inny wątek usuwa rozłączonego klienta.</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <span class="code-lang">Java – Server.java</span>
+      </div>
+<pre><span class="kw">public class</span> <span class="cls">Server</span> <span class="punc">{</span>
+    <span class="cmt">// CopyOnWriteArrayList – bezpieczna wielowątkowo</span>
+    <span class="kw">private final</span> <span class="cls">CopyOnWriteArrayList</span><span class="op">&lt;</span><span class="cls">ClientThread</span><span class="op">&gt;</span> <span class="var">handlers</span> <span class="op">=</span>
+        <span class="kw">new</span> <span class="cls">CopyOnWriteArrayList</span><span class="op">&lt;&gt;</span><span class="punc">();</span>
+
+    <span class="kw">public void</span> <span class="fn">broadcast</span><span class="punc">(</span><span class="cls">String</span> <span class="var">message</span><span class="punc">) {</span>
+        <span class="cls">System</span><span class="punc">.</span><span class="var">out</span><span class="punc">.</span><span class="fn">println</span><span class="punc">(</span><span class="str">"Serwer odebrał: "</span> <span class="op">+</span> <span class="var">message</span><span class="punc">);</span>
+        <span class="kw">for</span> <span class="punc">(</span><span class="cls">ClientThread</span> <span class="var">ct</span> <span class="punc">:</span> <span class="var">handlers</span><span class="punc">) {</span>
+            <span class="var">ct</span><span class="punc">.</span><span class="fn">send</span><span class="punc">(</span><span class="var">message</span><span class="punc">);</span>  <span class="cmt">// wysyła do każdego klienta</span>
+        <span class="punc">}</span>
+    <span class="punc">}</span>
+
+    <span class="kw">public void</span> <span class="fn">removeHandler</span><span class="punc">(</span><span class="cls">ClientThread</span> <span class="var">ct</span><span class="punc">) {</span>
+        <span class="var">handlers</span><span class="punc">.</span><span class="fn">remove</span><span class="punc">(</span><span class="var">ct</span><span class="punc">);</span>
+    <span class="punc">}</span>
+<span class="punc">}</span></pre>
+    </div>
+  </div>
+
+  <!-- 9 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">9</span> Model danych – serializacja przez sieć</div>
+    <p>Przez socket wysyłasz tylko tekst. Żeby przesłać obiekt, zamieniasz go na string (<code>toMessage</code>) i z powrotem (<code>fromMessage</code>). <code>Locale.ENGLISH</code> zapobiega problemom z przecinkiem vs kropką na różnych systemach.</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <span class="code-lang">Java – MyModel.java</span>
+      </div>
+<pre><span class="kw">public record</span> <span class="cls">MyModel</span><span class="punc">(</span><span class="kw">double</span> <span class="var">x</span><span class="punc">,</span> <span class="kw">double</span> <span class="var">y</span><span class="punc">,</span> <span class="cls">String</span> <span class="var">label</span><span class="punc">) {</span>
+
+    <span class="cmt">// Serializacja: obiekt → string do wysłania przez sieć</span>
+    <span class="kw">public</span> <span class="cls">String</span> <span class="fn">toMessage</span><span class="punc">() {</span>
+        <span class="kw">return</span> <span class="cls">String</span><span class="punc">.</span><span class="fn">format</span><span class="punc">(</span><span class="cls">Locale</span><span class="punc">.</span><span class="var">ENGLISH</span><span class="punc">,</span> <span class="str">"%f %f %s"</span><span class="punc">,</span> <span class="var">x</span><span class="punc">,</span> <span class="var">y</span><span class="punc">,</span> <span class="var">label</span><span class="punc">);</span>
+    <span class="punc">}</span>
+
+    <span class="cmt">// Deserializacja: string z sieci → obiekt</span>
+    <span class="kw">public static</span> <span class="cls">MyModel</span> <span class="fn">fromMessage</span><span class="punc">(</span><span class="cls">String</span> <span class="var">message</span><span class="punc">) {</span>
+        <span class="cls">String</span><span class="punc">[]</span> <span class="var">parts</span> <span class="op">=</span> <span class="var">message</span><span class="punc">.</span><span class="fn">split</span><span class="punc">(</span><span class="str">" "</span><span class="punc">);</span>
+        <span class="kw">double</span> <span class="var">x</span>     <span class="op">=</span> <span class="cls">Double</span><span class="punc">.</span><span class="fn">parseDouble</span><span class="punc">(</span><span class="var">parts</span><span class="punc">[</span><span class="num">0</span><span class="punc">]);</span>
+        <span class="kw">double</span> <span class="var">y</span>     <span class="op">=</span> <span class="cls">Double</span><span class="punc">.</span><span class="fn">parseDouble</span><span class="punc">(</span><span class="var">parts</span><span class="punc">[</span><span class="num">1</span><span class="punc">]);</span>
+        <span class="cls">String</span> <span class="var">label</span> <span class="op">=</span> <span class="var">parts</span><span class="punc">[</span><span class="num">2</span><span class="punc">];</span>
+        <span class="kw">return new</span> <span class="cls">MyModel</span><span class="punc">(</span><span class="var">x</span><span class="punc">,</span> <span class="var">y</span><span class="punc">,</span> <span class="var">label</span><span class="punc">);</span>
+    <span class="punc">}</span>
+<span class="punc">}</span></pre>
+    </div>
+
+    <div class="note">✅ Żadnych Maven dependencies! Wszystko co potrzebujesz do TCP jest w standardowej Javie (java.net, java.io).</div>
+  </div>
+
+  <!-- 10 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">10</span> Kroki</div>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><div class="step-title">ServerSocket + accept() + readLine()</div><div class="step-desc">samo odbieranie wiadomości</div></div></li>
+      <li><span class="step-n">2</span><div><div class="step-title">+ PrintWriter + println()</div><div class="step-desc">wysyłanie odpowiedzi do klienta</div></div></li>
+      <li><span class="step-n">3</span><div><div class="step-title">+ pętla while(readLine != null)</div><div class="step-desc">obsługa wielu wiadomości w jednej sesji</div></div></li>
+      <li><span class="step-n">4</span><div><div class="step-title">+ Thread per klient (ClientThread)</div><div class="step-desc">wielu klientów jednocześnie</div></div></li>
+      <li><span class="step-n">5</span><div><div class="step-title">+ lista handlerów + broadcast()</div><div class="step-desc">komunikacja między klientami</div></div></li>
+      <li><span class="step-n">6</span><div><div class="step-title">+ model danych (toMessage / fromMessage)</div><div class="step-desc">przesyłanie obiektów jako tekst przez sieć</div></div></li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>
